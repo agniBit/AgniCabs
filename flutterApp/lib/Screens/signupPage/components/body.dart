@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login_app/Screens/signupPage/components/inputTextFiels.dart';
 import 'package:login_app/const.dart';
 import 'package:login_app/serverAPIs/addNewUser.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);
@@ -73,7 +74,18 @@ class _BodyState extends State<Body> {
                   color: primarycolor,
                   onPressed: () {
                     AddNewUser(name.inputText, email.inputText,
-                        password.inputText, username.inputText);
+                            password.inputText, username.inputText)
+                        .then((val) {
+                      if (val.data['success']) {
+                        Fluttertoast.showToast(
+                            msg: 'authentication successful',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16);
+                      }
+                    });
                   },
                   child: Text(
                     'Regsiter',

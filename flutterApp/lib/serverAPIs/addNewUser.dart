@@ -14,15 +14,13 @@ AddNewUser(String name, String email, String password, String username) async {
         },
         options: Options(contentType: Headers.formUrlEncodedContentType));
   } on DioError catch (e) {
-    print(e);
     Fluttertoast.showToast(
         msg: e.response.data['msg'],
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16);
+    return e;
   }
 }
-
-

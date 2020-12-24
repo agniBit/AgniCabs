@@ -5,14 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 login(String username, String password) async {
   try {
     Dio dio = new Dio();
+    print('hi');
     return await dio.post("http://10.0.2.2:3000/authUser",
-        data: {
-          "password": password,
-          "username": username
-        },
+        data: {"password": password, "username": username},
         options: Options(contentType: Headers.formUrlEncodedContentType));
   } on DioError catch (e) {
-    print(e);
     Fluttertoast.showToast(
         msg: e.response.data['msg'],
         toastLength: Toast.LENGTH_SHORT,
@@ -20,5 +17,6 @@ login(String username, String password) async {
         backgroundColor: Colors.grey,
         textColor: Colors.white,
         fontSize: 16);
+    return e;
   }
 }

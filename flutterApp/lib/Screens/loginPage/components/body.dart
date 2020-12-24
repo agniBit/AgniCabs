@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_app/Screens/loginPage/components/textinputfield.dart';
+import 'package:login_app/Screens/map/mapSearchScreen.dart';
 import 'package:login_app/const.dart';
 import 'package:login_app/serverAPIs/authUser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -73,15 +74,23 @@ class _BodyState extends State<Body> {
                   color: primarycolor,
                   onPressed: () {
                     login(email, password).then((val) {
-                      if (val.data['success']) {
-                        var token = val.data['token'];
-                        Fluttertoast.showToast(
-                            msg: 'authentication successful',
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            fontSize: 16);
+                      try {
+                        if (val.data['success']) {
+                          var token = val.data['token'];
+                          Fluttertoast.showToast(
+                              msg: 'authentication successful',
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return mapSearchScreen();
+                          }));
+                        }
+                      } catch (e) {
+                        print("response error");
                       }
                     });
                   },
