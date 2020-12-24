@@ -1,0 +1,224 @@
+{
+    "openapi": "3.0.1",
+
+    "info": {
+      "title": "defaultTitle",
+      "description": "defaultDescription",
+      "version": "0.1"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000"
+      }
+    ],
+    "paths": {
+      "/getInfo": {
+        "get": {
+          "description": "Auto generated using Swagger Inspector",
+          "responses": {
+            "200": {
+              "description": "Auto generated using Swagger Inspector",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "examples": {}
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "http://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "/authUser": {
+        "post": {
+          "description": "Auto generated using Swagger Inspector",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/body"
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n    \"name\":\"abhishek\",\n    \"password\":\"agni\"\n}"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Auto generated using Swagger Inspector",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "examples": {}
+                }
+              }
+            },
+            "403": {
+              "description": "Auto generated using Swagger Inspector",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "examples": {}
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "http://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "/addNewUser": {
+        "post": {
+          "description": "Auto generated using Swagger Inspector",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/body_1"
+                },
+                "examples": {
+                  "0": {
+                    "value": "{\n    \"name\":\"abhishek\",\n    \"password\":\"agni\"\n}"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Auto generated using Swagger Inspector",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "examples": {
+                      "0": {
+                          "value": {
+                              "success": "true",
+                              "msg": "user added successfully"
+                          }
+                      }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Auto generated using Swagger Inspector",
+              "content": {
+                "text/html; charset=utf-8": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "examples": {}
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "http://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "/": {
+        "get": {
+          "description": "Auto generated using Swagger Inspector",
+          "responses": {
+            "200": {
+              "description": "Auto generated using Swagger Inspector",
+              "content": {
+                "text/html; charset=utf-8": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "examples": {}
+                }
+              }
+            }
+          },
+          "servers": [
+            {
+              "url": "http://localhost:3000"
+            }
+          ]
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "components": {
+      "schemas": {
+        "body_1": {
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "oauth2": {
+          "type": "oauth2",
+          "flows": {
+            "implicit": {
+              "authorizationUrl": "http://yourauthurl.com",
+              "scopes": {
+                "scope_name": "Enter your scopes here"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
