@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission/permission.dart';
+import 'package:login_app/Screens/map/apiKey.dart';
 
 class Background extends StatefulWidget {
   final Widget child;
@@ -15,8 +16,7 @@ class _BackgroundState extends State<Background> {
   final Widget child;
   GoogleMapController _controller;
   List<LatLng> routeCoords;
-  GoogleMapPolyline googleMapPolyline =
-      new GoogleMapPolyline(apiKey: apiKey);
+  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: apiKey);
 
   _BackgroundState(this.child);
 

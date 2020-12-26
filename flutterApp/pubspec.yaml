@@ -23,13 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  flutter_svg: ^0.17.4
+  cupertino_icons:
+  flutter_svg:
   google_maps_flutter:
   google_map_polyline:
   dio:
   fluttertoast:
-  permission: ^0.1.7
+  permission:
+  http:
 
 dev_dependencies:
   flutter_test:
