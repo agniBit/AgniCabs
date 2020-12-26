@@ -9,7 +9,8 @@ class mapSearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: background(child: Body())
+    return Scaffold(
+      body: Background(child: Body(),)
     );
   }
 }
