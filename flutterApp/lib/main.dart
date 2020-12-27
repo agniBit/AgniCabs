@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:login_app/Screens/map/mapSearchScreen.dart';
-import 'package:login_app/Screens/welcome/welcome.dart';
-import 'package:login_app/const.dart';
+import 'package:testing/Screens/welcome/welcome.dart';
+import 'package:testing/const.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AginCabs',
+      title: 'AgniCabs',
       theme: ThemeData(
         primaryColor: primarycolor,
         scaffoldBackgroundColor: Colors.white,

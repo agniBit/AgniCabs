@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/Screens/loginPage/components/textinputfield.dart';
-import 'package:login_app/Screens/map/mapSearchScreen.dart';
-import 'package:login_app/const.dart';
-import 'package:login_app/serverAPIs/authUser.dart';
+import 'package:testing/Screens/loginPage/components/textinputfield.dart';
+import 'package:testing/Screens/map/mapSearchScreen.dart';
+import 'package:testing/const.dart';
+import 'package:testing/serverAPIs/authUser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Body extends StatefulWidget {
@@ -76,7 +76,7 @@ class _BodyState extends State<Body> {
                     login(email, password).then((val) {
                       try {
                         if (val.data['success']) {
-                          var token = val.data['token'];
+                          // var token = val.data['token'];
                           Fluttertoast.showToast(
                               msg: 'authentication successful',
                               toastLength: Toast.LENGTH_SHORT,
@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
                               fontSize: 16);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return mapSearchScreen();
+                            return MapSearchScreen();
                           }));
                         }
                       } catch (e) {

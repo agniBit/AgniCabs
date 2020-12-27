@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/Screens/signupPage/components/inputTextFiels.dart';
-import 'package:login_app/const.dart';
-import 'package:login_app/serverAPIs/addNewUser.dart';
+import 'package:testing/Screens/signupPage/components/inputTextFiels.dart';
+import 'package:testing/const.dart';
+import 'package:testing/serverAPIs/addNewUser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Body extends StatefulWidget {
@@ -73,8 +73,8 @@ class _BodyState extends State<Body> {
                   padding: EdgeInsets.symmetric(vertical: 15),
                   color: primarycolor,
                   onPressed: () {
-                    AddNewUser(name.inputText, email.inputText,
-                            password.inputText, username.inputText)
+                    addNewUser(name.getInputText(), email.getInputText(),
+                            password.getInputText(), username.getInputText())
                         .then((val) {
                       if (val.data['success']) {
                         Fluttertoast.showToast(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/Screens/loginPage/components/background.dart';
+import 'package:testing/Screens/loginPage/components/background.dart';
 import 'components/body.dart';
 
 class Loginscreen extends StatelessWidget {
@@ -7,7 +7,9 @@ class Loginscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: true,
-      body: Background(child: Body(),),
+      body: Background(
+        child: Body(),
+      ),
     );
   }
 }

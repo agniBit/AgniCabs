@@ -1,85 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:google_map_polyline/google_map_polyline.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission/permission.dart';
-import 'package:login_app/Screens/map/apiKey.dart';
+import 'package:location/location.dart';
+import 'package:testing/Screens/map/components/DisplayMapWithRoute.dart';
 
 class Background extends StatefulWidget {
-  final Widget child;
-  @override
   Background({Key key, this.child}) : super(key: key);
-  _BackgroundState createState() => _BackgroundState(child);
+  final Widget child;
+
+  @override
+  _BackgroundState createState() => _BackgroundState(this.child);
 }
 
 class _BackgroundState extends State<Background> {
-  final Set<Polyline> polyline = {};
-  final Widget child;
-  GoogleMapController _controller;
-  List<LatLng> routeCoords;
-  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: apiKey);
-
   _BackgroundState(this.child);
-
-  getsomePoints() async {
-    var permissions =
-        await Permission.getPermissionsStatus([PermissionName.Location]);
-    if (permissions[0].permissionStatus == PermissionStatus.notAgain) {
-      print("ask permission");
-      var askpermissions =
-          await Permission.requestPermissions([PermissionName.Location]);
-    } else {
-      // routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
-      //     origin: LatLng(40.6782, -73.9442),
-      //     destination: LatLng(40.6944, -73.9212),
-      //     mode: Ro);
-      routeCoords = await googleMapPolyline.getCoordinatesWithLocation(
-          origin: LatLng(40.6782, -73.9442),
-          destination: LatLng(40.677939, -73.941755),
-          mode: RouteMode.walking);
-      print("else statement $routeCoords");
+  final Widget child;
+  void getlocationPerm() async {
+    final location = Location();
+    final hasPermissions = await location.hasPermission();
+    if (hasPermissions != PermissionStatus.GRANTED) {
+      await location.requestPermission();
     }
   }
 
-  // getaddressPoints() async {
-  //   routeCoords = await googleMapPolyline.getPolylineCoordinatesWithAddress(
-  //       origin: 'Brooklyn',
-  //       destination: '178 Broadway, Brooklyn',
-  //       mode: RouteMode.driving);
-  // }
-
   @override
-  void initState() {
+  initState() {
     super.initState();
-    getsomePoints();
+    getlocationPerm();
   }
 
+  var routePoints;
+  String origin = '79.9188,27.05524';
+  String destination = '80.915661,26.8660711';
   @override
   Widget build(BuildContext context) {
-    getsomePoints();
-    return Stack(children: [
-      GoogleMap(
-        onMapCreated: onMapCreated,
-        polylines: polyline,
-        initialCameraPosition:
-            CameraPosition(target: LatLng(40.6782, -73.9442), zoom: 14.0),
-        mapType: MapType.normal,
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      width: size.width,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          DisplayMapWithRoute(origin: origin, destination: destination),
+          child,
+        ],
       ),
-      child,
-    ]);
-  }
-
-  void onMapCreated(GoogleMapController controller) {
-    setState(() {
-      _controller = controller;
-      print("\n\non create map:- $routeCoords \n\n");
-      polyline.add(Polyline(
-          polylineId: PolylineId('route1'),
-          visible: true,
-          points: routeCoords,
-          width: 4,
-          color: Colors.blue,
-          startCap: Cap.roundCap,
-          endCap: Cap.buttCap));
-    });
+    );
   }
 }
