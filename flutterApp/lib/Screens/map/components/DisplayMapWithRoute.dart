@@ -22,7 +22,7 @@ class _DisplayMapWithRouteState extends State<DisplayMapWithRoute> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return FutureBuilder(
-      future: getRouteCoords(widget.origin, widget.destination, accessToken),
+      future: getRouteCoords(widget.origin, widget.destination),
       builder: (context, AsyncSnapshot routeCoords) {
         if (routeCoords.hasData) {
           return (Container(

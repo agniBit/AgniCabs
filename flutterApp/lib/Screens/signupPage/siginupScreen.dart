@@ -8,8 +8,11 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Background(
-        child: Body(),
+      resizeToAvoidBottomPadding: true,
+      body: SafeArea(
+        child: Background(
+          child: Body(),
+        ),
       ),
     );
   }

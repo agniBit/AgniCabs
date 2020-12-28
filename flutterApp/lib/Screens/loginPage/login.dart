@@ -8,8 +8,10 @@ class Loginscreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       body: Background(
-        child: Body(),
-      ),
+        child: SafeArea(
+          child: Body(),
+        ),
+      )
     );
   }
 }

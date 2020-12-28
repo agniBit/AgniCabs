@@ -1,71 +1,76 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:testing/const.dart';
+import 'package:location/location.dart';
+import 'package:testing/Screens/map/components/DisplayMapWithRoute.dart';
+import 'package:testing/Screens/map/components/addrSuggestionsWidget.dart';
+import 'package:testing/Screens/map/components/searchBox.dart';
 
-class Body extends StatelessWidget {
-  const Body({Key key}) : super(key: key);
+class Background extends StatefulWidget {
+  Background({Key key, this.child}) : super(key: key);
+  final Widget child;
 
   @override
+  _BackgroundState createState() => _BackgroundState(this.child);
+}
+
+class _BackgroundState extends State<Background> {
+  _BackgroundState(this.child);
+  final Widget child;
+  void getlocationPerm() async {
+    final location = Location();
+    final hasPermissions = await location.hasPermission();
+    if (hasPermissions != PermissionStatus.GRANTED) {
+      await location.requestPermission();
+    }
+  }
+
+  @override
+  initState() {
+    super.initState();
+    getlocationPerm();
+  }
+
+  var routePoints;
+  String origin = '79.9188,27.05524';
+  String destination = '80.915661,26.8660711';
+  @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    String inputText;
     Size size = MediaQuery.of(context).size;
-    return Row(children: [
-      Column(
+    // ignore: close_sinks
+    StreamController fromAddrStreamController = new StreamController();
+    // ignore: close_sinks
+    StreamController toAddrStreamController = new StreamController();
+    Stream fromAddrStream = fromAddrStreamController.stream;
+    Stream toAddrStream = toAddrStreamController.stream;
+    return Container(
+      height: size.height,
+      width: size.width,
+      color: Colors.red,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: size.width * .8,
-            margin:
-                EdgeInsets.symmetric(vertical: 2, horizontal: size.width * .04),
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: primarycolorlight,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: TextField(
-              onChanged: (text) {
-                inputText = text;
-              },
-              decoration: InputDecoration(
-                icon: Icon(Icons.search),
-                hintText: "from",
-                border: InputBorder.none,
+          // DisplayMapWithRoute(origin: origin, destination: destination),
+          Column(
+            children: [
+              SizedBox(
+                height: 5,
               ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: size.width * .8,
-            margin:
-                EdgeInsets.symmetric(vertical: 2, horizontal: size.width * .04),
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: primarycolorlight,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: TextField(
-              onChanged: (text) {
-                inputText = text;
-              },
-              decoration: InputDecoration(
-                icon: Icon(Icons.search),
-                hintText: "to",
-                border: InputBorder.none,
+              SearchBox(
+                size: size,
+                hintText: 'from',
+                streamController: fromAddrStreamController,
               ),
-            ),
-          )
+              SearchBox(
+                size: size,
+                hintText: 'to',
+                streamController: toAddrStreamController,
+              ),
+            ],
+          ),
+          AddrSuggestionsWidget(stream: fromAddrStream, size: size, position: 50,),
+          AddrSuggestionsWidget(stream: toAddrStream, size: size, position: 95),
         ],
       ),
-      Container(
-          width: size.width * .1,
-          height: 40,
-          child: Image.asset(
-              "assets/transparent-wedding-icon-bouquet-icon-5fc31666599653.040194881606620774367.png")),
-    ]);
+    );
   }
 }

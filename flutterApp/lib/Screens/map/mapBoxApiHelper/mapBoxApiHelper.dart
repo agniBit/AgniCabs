@@ -1,6 +1,8 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
 import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
+import 'package:testing/Screens/map/apiKey.dart';
 
 // Future<void> main() async {
 //   String origin = '79.9188,27.05524';
@@ -10,7 +12,7 @@ import 'package:latlong/latlong.dart';
 
 // }
 
-getRouteCoords(origin, destination, accessToken) async {
+getRouteCoords(origin, destination) async {
   String url =
       "https://api.mapbox.com/directions/v5/mapbox/driving/$origin;$destination?overview=full&geometries=geojson&access_token=$accessToken";
   var list = await get(url).then((value) {
@@ -31,17 +33,19 @@ getRouteCoords(origin, destination, accessToken) async {
   return list;
 }
 
-getMatchingLocations(location, searchNear, accessToken) async {
+getMatchingLocations(location, streamController) async {
+  var geoLocation = await Location().getLocation();
   var url =
-      'https://api.mapbox.com/geocoding/v5/mapbox.places/$location.json?country=IN&proximity=$searchNear&access_token=$accessToken';
+      'https://api.mapbox.com/geocoding/v5/mapbox.places/$location.json?country=IN&proximity=${geoLocation.longitude},${geoLocation.latitude}&access_token=$accessToken';
+  print(url);
   var response = await get(url);
   var jsonResponse = convert.jsonDecode(response.body);
+  var placeList = [];
   if (response.statusCode == 200) {
-    print(jsonResponse);
     for (var i = 0; i < jsonResponse['features'].length; i++) {
-      print(jsonResponse['features'][i]['place_name']);
+      placeList.add(jsonResponse['features'][i]['place_name']);
     }
-  } else {
-    print(jsonResponse['message']);
+    print(placeList);
+    streamController.add(placeList);
   }
 }
