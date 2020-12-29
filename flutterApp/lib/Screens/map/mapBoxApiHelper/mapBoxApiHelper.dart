@@ -45,7 +45,19 @@ getMatchingLocations(location, streamController) async {
     for (var i = 0; i < jsonResponse['features'].length; i++) {
       placeList.add(jsonResponse['features'][i]['place_name']);
     }
-    print(placeList);
+    // print(placeList);
+    // var placeList = [
+    //   "Kannauj, Uttar Pradesh, India",
+    //   "Kandrauli Bangar, Kannauj, Kannauj, Uttar Pradesh, India",
+    //   "Kandraulikachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
+    //   "Kannauj Kachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
+    //   "Kanouli, Tirwa, Kannauj, Uttar Pradesh, India",
+    //   "Kannauj, Uttar Pradesh, India",
+    //   "Kandrauli Bangar, Kannauj, Kannauj, Uttar Pradesh, India",
+    //   "Kandraulikachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
+    //   "Kannauj Kachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
+    //   "Kanouli, Tirwa, Kannauj, Uttar Pradesh, India"
+    // ];
     streamController.add(placeList);
   }
 }

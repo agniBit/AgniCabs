@@ -29,7 +29,7 @@ class _DisplayMapWithRouteState extends State<DisplayMapWithRoute> {
             height: size.height,
             width: size.width,
             child: FlutterMap(
-              options: MapOptions(center: routeCoords.data[0], maxZoom: 16.0),
+              options: MapOptions(center: routeCoords.data[0], maxZoom: 14.0),
               layers: [
                 TileLayerOptions(urlTemplate: urlTemplate, additionalOptions: {
                   'accessToken': accessToken,

@@ -44,13 +44,20 @@ class _SearchBoxState extends State<SearchBox> {
     return Container(
       alignment: Alignment.center,
       height: 40,
-      width: widget.size.width * .85,
+      width: widget.size.width,
       margin: EdgeInsets.symmetric(
-          vertical: 2, horizontal: widget.size.width * .04),
+          vertical: 5, horizontal: widget.size.width * .08),
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: primarycolorlight,
-        borderRadius: BorderRadius.circular(30),
+        color: Colors.white.withOpacity(.85),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.purple[500],
+            offset: Offset(.3,1),
+            blurRadius: 6.0,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(20),
       ),
       child: TextField(
         onChanged: (text) {
