@@ -9,7 +9,11 @@ class MapSearchScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: SafeArea(
-        child: Background(),
+        child: Stack(
+          children: [
+            Background(),
+          ],
+        ),
       ),
     );
   }

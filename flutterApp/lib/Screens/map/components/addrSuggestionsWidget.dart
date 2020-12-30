@@ -18,64 +18,69 @@ class AddrSuggestionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: stream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData &&
-            snapshot.data != Null &&
-            MediaQuery.of(context).viewInsets.bottom != 0 &&
-            snapshot.data.inputText.length > 0) {
-          getMatchingLocations(
-              snapshot.data.inputText, placeDataStreamController);
-          return Container(
-            width: size.width*.9,
-            constraints: BoxConstraints(maxHeight: size.height * .35),
-            margin: EdgeInsets.symmetric(
-                vertical: 2,
-                horizontal: MediaQuery.of(context).size.width * .08),
-            color: Colors.transparent,
-            child: StreamBuilder(
-              stream: placeDataStream,
-              builder: (BuildContext contex, AsyncSnapshot placeDataSnapshot) {
-                if (placeDataSnapshot.hasData &&
-                    placeDataSnapshot.data.length > 0) {
-                  return ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: placeDataSnapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: Container(
-                            padding: EdgeInsets.all(12),
-                            color: index % 2 == 0
-                                ? Colors.transparent
-                                : Colors.grey[50].withOpacity(0.05),
-                            child: Text(
-                              placeDataSnapshot.data[index],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: StreamBuilder(
+        stream: stream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData &&
+              snapshot.data != Null &&
+              MediaQuery.of(context).viewInsets.bottom != 0 &&
+              snapshot.data.inputText.length > 0) {
+            getMatchingLocations(
+                snapshot.data.inputText, placeDataStreamController);
+            return Container(
+              width: size.width,
+              constraints: BoxConstraints(maxHeight: size.height * .35),
+              margin: EdgeInsets.symmetric(
+                  vertical: 2,
+                  horizontal: MediaQuery.of(context).size.width * .04),
+              color: Colors.transparent,
+              child: StreamBuilder(
+                stream: placeDataStream,
+                builder:
+                    (BuildContext contex, AsyncSnapshot placeDataSnapshot) {
+                  if (placeDataSnapshot.hasData &&
+                      placeDataSnapshot.data.length > 0) {
+                    return ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: placeDataSnapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ClipRect(
+                          child: BackdropFilter(
+                            filter:
+                                ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                            child: Container(
+                              padding: EdgeInsets.all(12),
+                              color: index % 2 == 0
+                                  ? Colors.transparent
+                                  : Colors.grey[50].withOpacity(0.05),
+                              child: Text(
+                                placeDataSnapshot.data[index],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return Container(
-                      height: 300,
-                      alignment: Alignment.center,
-                      child: Text("Searching"));
-                }
-              },
-            ),
-          );
-        } else {
-          return Container();
-        }
-      },
+                        );
+                      },
+                    );
+                  } else {
+                    return Container(
+                        height: 300,
+                        alignment: Alignment.center,
+                        child: Text("Searching"));
+                  }
+                },
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
     );
   }
 }

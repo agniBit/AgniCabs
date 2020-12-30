@@ -58,6 +58,7 @@ getMatchingLocations(location, streamController) async {
     "Kannauj Kachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
     // "Kanouli, Tirwa, Kannauj, Uttar Pradesh, India"
   ];
+  // print(placeList);
   streamController.add(placeList);
   // }
 }

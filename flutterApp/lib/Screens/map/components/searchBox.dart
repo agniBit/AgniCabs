@@ -45,17 +45,17 @@ class _SearchBoxState extends State<SearchBox> {
     return Container(
       alignment: Alignment.centerRight,
       height: 40,
-      width: size.width *.8-20,
-      margin: 
-          EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+      width: size.width * .8 - 20,
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white),
+        border: Border.all(color: Colors.deepPurple),
       ),
       child: TextField(
         onChanged: (text) {
+          print('notify suggestion box');
           widget.data.inputText = text;
           widget.notifyToBuilder();
         },
@@ -67,14 +67,13 @@ class _SearchBoxState extends State<SearchBox> {
           widget.data.isFucused = true;
           widget.notifyToBuilder();
         },
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.deepPurple),
         decoration: InputDecoration(
-          icon: Icon(Icons.search,color: Colors.white ),
-          hintText: widget.hintText,
-          border: InputBorder.none,
-          focusColor: Colors.deepPurple,
-          hintStyle: TextStyle(color: Colors.grey)
-        ),
+            icon: Icon(Icons.search, color: Colors.deepPurple),
+            hintText: widget.hintText,
+            border: InputBorder.none,
+            focusColor: Colors.deepPurple,
+            hintStyle: TextStyle(color: Colors.grey)),
       ),
     );
   }
