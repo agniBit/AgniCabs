@@ -73,26 +73,33 @@ class _BodyState extends State<Body> {
                   padding: EdgeInsets.symmetric(vertical: 15),
                   color: primarycolor,
                   onPressed: () {
-                    login(email, password).then((val) {
-                      try {
-                        if (val.data['success']) {
-                          // var token = val.data['token'];
-                          Fluttertoast.showToast(
-                              msg: 'authentication successful',
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: Colors.green,
-                              textColor: Colors.white,
-                              fontSize: 16);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return MapSearchScreen();
-                          }));
-                        }
-                      } catch (e) {
-                        print("response error");
-                      }
-                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return MapSearchScreen();
+                      }),
+                    );
+                    // login(email, password).then((val) {
+                    //   try {
+                    //     if (val.data['success']) {
+                    //       // var token = val.data['token'];
+                    //       Fluttertoast.showToast(
+                    //           msg: 'authentication successful',
+                    //           toastLength: Toast.LENGTH_SHORT,
+                    //           gravity: ToastGravity.BOTTOM,
+                    //           backgroundColor: Colors.green,
+                    //           textColor: Colors.white,
+                    //           fontSize: 16);
+                    //       Navigator.push(context,
+                    //         MaterialPageRoute(builder: (context) {
+                    //           return MapSearchScreen();
+                    //         }),
+                    //       );
+                    //     }
+                    //   } catch (e) {
+                    //     print("response error");
+                    //   }
+                    // });
                   },
                   child: Text(
                     'Signin',

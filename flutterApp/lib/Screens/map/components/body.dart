@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:testing/Screens/map/components/DisplayMapWithRoute.dart';
@@ -48,52 +49,79 @@ class _BackgroundState extends State<Background> {
       alignment: Alignment.center,
       children: [
         DisplayMapWithRoute(origin: origin, destination: destination),
-        Column(
-          children: [
-            SizedBox(
-              height: 8,
+        Positioned(
+          top: 0,
+          child: Container(
+            height: 120,
+            width: size.width,
+            color: Colors.black.withOpacity(.7),
+            child: Row(
+              children: [
+                Container(
+                  width: size.width * .2,
+                  child: Icon(Icons.menu,
+                      size: size.width * .10, color: Colors.white),
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 8,
+                    ),
+                    SearchBox(
+                      size: size,
+                      hintText: 'from',
+                      streamController: addrStreamController,
+                    ),
+                    SearchBox(
+                      size: size,
+                      hintText: 'to',
+                      streamController: addrStreamController,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            SearchBox(
-              size: size,
-              hintText: 'from',
-              streamController: addrStreamController,
-            ),
-            SearchBox(
-              size: size,
-              hintText: 'to',
-              streamController: addrStreamController,
-            ),
-            AddrSuggestionsWidget(
-              stream: addrStream,
-              size: size,
-            ),
-          ],
+          ),
         ),
         Positioned(
-          bottom: 10,
+          top: 130,
+          child: AddrSuggestionsWidget(
+            stream: addrStream,
+            size: size,
+          ),
+        ),
+        Positioned(
+          bottom: 0,
           child: Container(
-            height: 50,
-            width: size.width * .85,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: ElevatedButton(
-                onPressed: () {
-                  print('book button pressed');
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.pressed))
-                        return Colors.lightGreen;
-                      return Colors.purple[500]; // Use the component's default.
-                    },
+            height: 80,
+            width: size.width,
+            alignment: Alignment.center,
+            color: Colors.black.withOpacity(.7),
+            child: Container(
+              height: 50,
+              width: size.width * .85,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: ElevatedButton(
+                  onPressed: () {
+                    print('book button pressed');
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Colors.green[700];
+                        return Colors
+                            .deepPurple; // Use the component's default.
+                      },
+                    ),
                   ),
-                ),
-                child: Text(
-                  "Book",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
+                  child: Text(
+                    "Book",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
               ),

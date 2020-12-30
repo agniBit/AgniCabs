@@ -55,7 +55,7 @@ class _DisplayMapWithRouteState extends State<DisplayMapWithRoute> {
                   Polyline(
                       points: routeCoords.data,
                       strokeWidth: 6.0,
-                      color: Colors.purple),
+                      color: Colors.deepPurple),
                 ])
               ],
             ),

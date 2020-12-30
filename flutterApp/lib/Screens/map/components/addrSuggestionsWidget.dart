@@ -28,8 +28,8 @@ class AddrSuggestionsWidget extends StatelessWidget {
           getMatchingLocations(
               snapshot.data.inputText, placeDataStreamController);
           return Container(
-            constraints: BoxConstraints(maxHeight: size.height * .4),
-            // height: size.height*.4,
+            width: size.width*.9,
+            constraints: BoxConstraints(maxHeight: size.height * .35),
             margin: EdgeInsets.symmetric(
                 vertical: 2,
                 horizontal: MediaQuery.of(context).size.width * .08),
@@ -39,13 +39,14 @@ class AddrSuggestionsWidget extends StatelessWidget {
               builder: (BuildContext contex, AsyncSnapshot placeDataSnapshot) {
                 if (placeDataSnapshot.hasData &&
                     placeDataSnapshot.data.length > 0) {
-                  return ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                      child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
+                  return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: placeDataSnapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ClipRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Container(
                             padding: EdgeInsets.all(12),
                             color: index % 2 == 0
                                 ? Colors.transparent
@@ -57,11 +58,10 @@ class AddrSuggestionsWidget extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                          );
-                        },
-                        itemCount: placeDataSnapshot.data.length,
-                      ),
-                    ),
+                          ),
+                        ),
+                      );
+                    },
                   );
                 } else {
                   return Container(

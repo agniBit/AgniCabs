@@ -41,23 +41,18 @@ class _SearchBoxState extends State<SearchBox> {
   String inputText;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      alignment: Alignment.center,
+      alignment: Alignment.centerRight,
       height: 40,
-      width: widget.size.width,
-      margin: EdgeInsets.symmetric(
-          vertical: 5, horizontal: widget.size.width * .08),
+      width: size.width *.8-20,
+      margin: 
+          EdgeInsets.symmetric(vertical: 5,horizontal: 10),
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(.85),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.purple[500],
-            offset: Offset(.3,1),
-            blurRadius: 6.0,
-          ),
-        ],
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white),
       ),
       child: TextField(
         onChanged: (text) {
@@ -72,10 +67,13 @@ class _SearchBoxState extends State<SearchBox> {
           widget.data.isFucused = true;
           widget.notifyToBuilder();
         },
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.search,color: Colors.white ),
           hintText: widget.hintText,
           border: InputBorder.none,
+          focusColor: Colors.deepPurple,
+          hintStyle: TextStyle(color: Colors.grey)
         ),
       ),
     );
