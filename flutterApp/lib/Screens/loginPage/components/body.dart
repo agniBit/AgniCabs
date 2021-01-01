@@ -23,13 +23,21 @@ class _BodyState extends State<Body> {
       height: size.height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'signin',
+            'Sign-in',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           ),
           SizedBox(
-            height: size.height * .07,
+            height: size.height * .02,
+          ),
+          Image.asset(
+              "assets/logo.png",
+              height: size.height * .2,
+            ),
+          SizedBox(
+            height: size.height * .02,
           ),
           Textinputfiel(
             child: TextField(

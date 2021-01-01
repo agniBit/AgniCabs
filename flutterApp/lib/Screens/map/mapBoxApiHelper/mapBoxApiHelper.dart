@@ -34,31 +34,17 @@ getRouteCoords(origin, destination) async {
 }
 
 getMatchingLocations(location, streamController) async {
-  // var geoLocation = await Location().getLocation();
-  // var url =
-  //     'https://api.mapbox.com/geocoding/v5/mapbox.places/$location.json?country=IN&proximity=${geoLocation.longitude},${geoLocation.latitude}&access_token=$accessToken';
-  // print(url);
-  // var response = await get(url);
-  // var jsonResponse = convert.jsonDecode(response.body);
-  // var placeList = [];
-  // if (response.statusCode == 200) {
-  //   for (var i = 0; i < jsonResponse['features'].length; i++) {
-  //     placeList.add(jsonResponse['features'][i]['place_name']);
-  //   }
-  //   print(placeList);
-  var placeList = [
-    "Kannauj, Uttar Pradesh, India",
-    "Kandrauli Bangar, Kannauj, Kannauj, Uttar Pradesh, India",
-    "Kandraulikachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
-    "Kannauj Kachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
-    "Kanouli, Tirwa, Kannauj, Uttar Pradesh, India",
-    "Kannauj, Uttar Pradesh, India",
-    "Kandrauli Bangar, Kannauj, Kannauj, Uttar Pradesh, India",
-    "Kandraulikachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
-    "Kannauj Kachhoha, Kannauj, Kannauj, Uttar Pradesh, India",
-    // "Kanouli, Tirwa, Kannauj, Uttar Pradesh, India"
-  ];
-  // print(placeList);
+  var geoLocation = await Location().getLocation();
+  var url =
+      'https://api.mapbox.com/geocoding/v5/mapbox.places/$location.json?country=IN&proximity=${geoLocation.longitude},${geoLocation.latitude}&access_token=$accessToken';
+  print(url);
+  var response = await get(url);
+  var jsonResponse = convert.jsonDecode(response.body);
+  var placeList = [];
+  if (response.statusCode == 200) {
+    for (var i = 0; i < jsonResponse['features'].length; i++) {
+      placeList.add(jsonResponse['features'][i]['place_name']);
+    }
   streamController.add(placeList);
-  // }
+  }
 }

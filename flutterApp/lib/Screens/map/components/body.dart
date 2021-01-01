@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:testing/Screens/appDrawer/appDrawer.dart';
 import 'package:testing/Screens/map/components/DisplayMapWithRoute.dart';
 import 'package:testing/Screens/map/components/addrSuggestionsWidget.dart';
 import 'package:testing/Screens/map/components/searchBox.dart';
@@ -29,10 +30,10 @@ class _BackgroundState extends State<Background> {
   @override
   initState() {
     super.initState();
-    getlocationPerm();
+    // getlocationPerm();
   }
 
-  void set closeOtherAddrSuggestionsWidget(bool value) {
+  set closeOtherAddrSuggestionsWidget(bool value) {
     this.openFromSuggestionWidget = value;
   }
 
@@ -49,112 +50,94 @@ class _BackgroundState extends State<Background> {
       alignment: Alignment.center,
       children: [
         DisplayMapWithRoute(origin: origin, destination: destination),
-        (MediaQuery.of(context).viewInsets.bottom == 0)
-            ? Stack(
-                children: [
-                  Positioned(
-                    top: 10,
-                    left: 10,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        print('open menu');
+        Positioned(
+          top: 0,
+          child: Container(
+            height: 120,
+            width: size.width,
+            color: Colors.black.withOpacity(.7),
+            child: Row(
+              children: [
+                Container(
+                  width: size.width * .2,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      size: size.width * .10,
+                      color: Colors.deepPurple,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
+                ),
+                // AppDrawer(),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 8,
+                    ),
+                    SearchBox(
+                      size: size,
+                      hintText: 'from',
+                      streamController: addrStreamController,
+                    ),
+                    SearchBox(
+                      size: size,
+                      hintText: 'to',
+                      streamController: addrStreamController,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: 130,
+          child: AddrSuggestionsWidget(
+            stream: addrStream,
+            size: size,
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            height: 80,
+            width: size.width,
+            alignment: Alignment.center,
+            color: Colors.black.withOpacity(.7),
+            child: Container(
+              height: 50,
+              width: size.width * .85,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: ElevatedButton(
+                  onPressed: () {
+                    print('book button pressed');
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Colors.green[700];
+                        return Colors
+                            .deepPurple; // Use the component's default.
                       },
-                      elevation:10,
-                      backgroundColor: Colors.deepPurple,
-                      child: Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                      ),
                     ),
                   ),
-                  Positioned(
-                    top: 130,
-                    child: AddrSuggestionsWidget(
-                      stream: addrStream,
-                      size: size,
+                  child: Text(
+                    "Book",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      width: size.width,
-                      alignment: Alignment.center,
-                      color: Colors.black.withOpacity(.7),
-                      child: Container(
-                        // height: 120,
-                        width: size.width * .85,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            SearchBox(
-                              size: size,
-                              hintText: 'from',
-                              streamController: addrStreamController,
-                            ),
-                            SearchBox(
-                              size: size,
-                              hintText: 'to',
-                              streamController: addrStreamController,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : Stack(
-                children: [
-                  Positioned(
-                    bottom: 0,
-                    child: Container(),
-                  ),
-                  Positioned(
-                    top: 130,
-                    child: AddrSuggestionsWidget(
-                      stream: addrStream,
-                      size: size,
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    child: Container(
-                      width: size.width,
-                      alignment: Alignment.center,
-                      color: Colors.black.withOpacity(.7),
-                      child: Container(
-                        // height: 120,
-                        width: size.width * .85,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            SearchBox(
-                              size: size,
-                              hintText: 'from',
-                              streamController: addrStreamController,
-                            ),
-                            SearchBox(
-                              size: size,
-                              hintText: 'to',
-                              streamController: addrStreamController,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+            ),
+          ),
+        ),
       ],
     );
   }
