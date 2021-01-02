@@ -44,22 +44,27 @@ class AddrSuggestionsWidget extends StatelessWidget {
                       placeDataSnapshot.data.length > 0) {
                     return ListView.builder(
                       physics: BouncingScrollPhysics(),
-                      itemCount: placeDataSnapshot.data.length,
+                      itemCount: placeDataSnapshot.data['features'].length,
                       itemBuilder: (BuildContext context, int index) {
                         return ClipRect(
                           child: BackdropFilter(
                             filter:
                                 ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                            child: Container(
-                              padding: EdgeInsets.all(12),
-                              color: index % 2 == 0
-                                  ? Colors.transparent
-                                  : Colors.grey[50].withOpacity(0.05),
-                              child: Text(
-                                placeDataSnapshot.data[index],
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
+                            child: InkWell(
+                              onTap: () {
+                                print('tapped ${placeDataSnapshot.data['features'][index]['geometry']['coordinates']}');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(12),
+                                color: index % 2 == 0
+                                    ? Colors.transparent
+                                    : Colors.grey[50].withOpacity(0.05),
+                                child: Text(
+                                  placeDataSnapshot.data['features'][index]['place_name'],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             ),

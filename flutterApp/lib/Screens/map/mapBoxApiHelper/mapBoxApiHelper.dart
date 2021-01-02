@@ -42,9 +42,8 @@ getMatchingLocations(location, streamController) async {
   var jsonResponse = convert.jsonDecode(response.body);
   var placeList = [];
   if (response.statusCode == 200) {
-    for (var i = 0; i < jsonResponse['features'].length; i++) {
-      placeList.add(jsonResponse['features'][i]['place_name']);
-    }
-  streamController.add(placeList);
+    streamController.add(jsonResponse);
+    // for (var i = 0; i < jsonResponse['features'].length; i++) {
+    //   placeList.add(jsonResponse['features'][i]['place_name']);
   }
 }
