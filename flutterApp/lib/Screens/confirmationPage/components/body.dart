@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:testing/Screens/confirmationPage/components/mapRoute.dart';
-import 'package:latlong/latlong.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key key}) : super(key: key);
+  const Body({
+    Key key, 
+    @required this.toAddrData, 
+    @required this.fromAddrData
+  }) : super(key: key);
+  
+  final toAddrData;
+  final fromAddrData;
 
   @override
   Widget build(BuildContext context) {
-    LatLng end = LatLng(26.449923, 80.331871);
-    LatLng start = LatLng(26.850000, 80.949997);
+    // LatLng end = LatLng(26.449923, 80.331871);
+    // LatLng start = LatLng(26.850000, 80.949997);
     var mQ = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Row(children: [
-          SizedBox(
-            width: 10,
-          ),
-          Icon(Icons.arrow_back),
-          SizedBox(
-            width: 30,
-          ),
-          Text('AgniCabs'),
-        ]),
+        title: Text('AgniCabs'),
       ),
       body: Container(
         height: mQ.height,
@@ -31,8 +28,8 @@ class Body extends StatelessWidget {
           Expanded(
             flex: 6,
             child: MapRoute(
-              start: start,
-              end: end,
+              start: fromAddrData.latLng,
+              end: toAddrData.latLng,
             ),
           ),
           Expanded(

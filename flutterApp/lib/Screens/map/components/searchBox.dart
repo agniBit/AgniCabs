@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:testing/const.dart';
 
 class InputTextBoxData {
   String inputText = '';
-  bool isFucused = false;
+  bool isComplete;
+  bool isDestinationAddrInput;
 }
 
 // ignore: must_be_immutable
@@ -14,20 +13,16 @@ class SearchBox extends StatefulWidget {
     Key key,
     @required this.size,
     @required this.hintText,
+    @required this.isDestinationAddrInput,
     this.streamController,
   }) : super(key: key) {
     data = InputTextBoxData();
-    streamController.add(data);
   }
-
+  final bool isDestinationAddrInput;
   final Size size;
   final String hintText;
   final StreamController streamController;
   InputTextBoxData data;
-
-  notifyToBuilder() {
-    streamController.add(data);
-  }
 
   @override
   _SearchBoxState createState() => _SearchBoxState();
@@ -55,17 +50,13 @@ class _SearchBoxState extends State<SearchBox> {
       ),
       child: TextField(
         onChanged: (text) {
-          print('notify suggestion box');
+          widget.data.isDestinationAddrInput = widget.isDestinationAddrInput;
+          widget.data.isComplete = false;
           widget.data.inputText = text;
-          widget.notifyToBuilder();
-        },
-        onEditingComplete: () {
-          widget.data.isFucused = false;
-          widget.notifyToBuilder();
+          widget.streamController.add(widget.data);
         },
         onTap: () {
-          widget.data.isFucused = true;
-          widget.notifyToBuilder();
+          widget.streamController.add(widget.data);
         },
         style: TextStyle(color: Colors.deepPurple),
         decoration: InputDecoration(
