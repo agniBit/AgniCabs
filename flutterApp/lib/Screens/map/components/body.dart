@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 import 'package:testing/Screens/map/components/addrSuggestionsWidget.dart';
+import 'package:testing/Screens/map/components/displayLiveLocation.dart';
 import 'package:testing/Screens/map/components/searchBox.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
-import 'package:testing/Screens/map/apiKey.dart';
 
 class Background extends StatefulWidget {
   Background({Key key, this.child}) : super(key: key);
@@ -20,149 +16,32 @@ class Background extends StatefulWidget {
 class _BackgroundState extends State<Background> {
   _BackgroundState(this.child);
   final Widget child;
-  bool openFromSuggestionWidget = true;
-  LocationData _currentLocation;
-  MapController _mapController;
 
-  // ignore: close_sinks
-  StreamController addrStreamController;
-  Stream addrStream;
-
-  bool _liveUpdate = true;
-  bool _permission = false;
-
-  String _serviceError = '';
-
-  final Location _locationService = Location();
+  // void getlocationPerm() async {
+  //   final location = Location();
+  //   final hasPermissions = await location.hasPermission();
+  //   if (hasPermissions != PermissionStatus.GRANTED) {
+  //     await location.requestPermission();
+  //   }
+  // }
 
   @override
   initState() {
     super.initState();
-    _mapController = MapController();
-    initLocationService();
-    addrStreamController = new StreamController.broadcast();
-    addrStream = addrStreamController.stream;
-  }
-
-  void initLocationService() async {
-    await _locationService.changeSettings(
-      accuracy: LocationAccuracy.HIGH,
-      interval: 1000,
-    );
-
-    LocationData location;
-    bool serviceEnabled;
-    bool serviceRequestResult;
-
-    try {
-      serviceEnabled = await _locationService.serviceEnabled();
-
-      if (serviceEnabled) {
-        var permission = await _locationService.requestPermission();
-        _permission = permission == PermissionStatus.GRANTED;
-
-        if (_permission) {
-          location = await _locationService.getLocation();
-          _currentLocation = location;
-          _locationService
-              .onLocationChanged()
-              .listen((LocationData result) async {
-            if (mounted) {
-              setState(() {
-                _currentLocation = result;
-
-                // If Live Update is enabled, move map center
-                if (_liveUpdate) {
-                  _mapController.move(
-                      LatLng(_currentLocation.latitude,
-                          _currentLocation.longitude),
-                      _mapController.zoom);
-                }
-              });
-            }
-          });
-        }
-      } else {
-        serviceRequestResult = await _locationService.requestService();
-        if (serviceRequestResult) {
-          initLocationService();
-          return;
-        }
-      }
-    } on PlatformException catch (e) {
-      print(e);
-      if (e.code == 'PERMISSION_DENIED') {
-        _serviceError = e.message;
-      } else if (e.code == 'SERVICE_STATUS_ERROR') {
-        _serviceError = e.message;
-      }
-      location = null;
-    }
-  }
-
-  set closeOtherAddrSuggestionsWidget(bool value) {
-    this.openFromSuggestionWidget = value;
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // ignore: close_sinks
-
-    LatLng currentLatLng;
-    if (_currentLocation != null) {
-      currentLatLng =
-          LatLng(_currentLocation.latitude, _currentLocation.longitude);
-    } else {
-      currentLatLng = LatLng(0, 0);
-    }
-
-    var markers = <Marker>[
-      Marker(
-        width: 60.0,
-        height: 60.0,
-        point: currentLatLng,
-        builder: (ctx) => Container(
-          child: Icon(
-            Icons.location_on,
-            color: Colors.deepOrange,
-            size: 60,
-          ),
-        ),
-      ),
-    ];
+    StreamController addrStreamController = new StreamController();
+    Stream addrStream = addrStreamController.stream;
     return Stack(
       alignment: Alignment.center,
       children: [
         Positioned(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: FlutterMap(
-              mapController: _mapController,
-              options: MapOptions(
-                center: LatLng(currentLatLng.latitude, currentLatLng.longitude),
-                zoom: 17.0,
-              ),
-              layers: [
-                TileLayerOptions(urlTemplate: urlTemplate, additionalOptions: {
-                  'accessToken': accessToken,
-                  'id': 'mapbox.mapbox-streets-v8'
-                }),
-                MarkerLayerOptions(markers: markers)
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 100,
-          right: 20,
-          child: FloatingActionButton(
-            onPressed: () => _liveUpdate = !_liveUpdate,
-            child: _liveUpdate
-                ? Icon(Icons.location_on)
-                : Icon(Icons.location_off),
-          ),
+          // child: Container(),
+          child: DisplayLiveLOcation(),
         ),
         Positioned(
           top: 0,
@@ -210,6 +89,13 @@ class _BackgroundState extends State<Background> {
           ),
         ),
         Positioned(
+          top: 130,
+          child: AddrSuggestionsWidget(
+            stream: addrStream,
+            size: size,
+          ),
+        ),
+        Positioned(
           bottom: 0,
           child: Container(
             height: 80,
@@ -245,13 +131,6 @@ class _BackgroundState extends State<Background> {
                 ),
               ),
             ),
-          ),
-        ),
-        Positioned(
-          top: 130,
-          child: AddrSuggestionsWidget(
-            stream: addrStream,
-            size: size,
           ),
         ),
       ],

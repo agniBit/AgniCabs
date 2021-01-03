@@ -17,6 +17,7 @@ class placeList {
   var latlng = [];
 }
 
+// ignore: must_be_immutable
 class AddrSuggestionsWidget extends StatefulWidget {
   AddrSuggestionsWidget({Key key, @required this.size, @required this.stream})
       : super(key: key) {
@@ -47,7 +48,6 @@ class _AddrSuggestionsWidgetState extends State<AddrSuggestionsWidget> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           print('get data');
           print(snapshot.data);
-          if (snapshot.hasData) {
             if (snapshot.hasData &&
                 snapshot.data != Null &&
                 MediaQuery.of(context).viewInsets.bottom != 0 &&
@@ -67,11 +67,6 @@ class _AddrSuggestionsWidgetState extends State<AddrSuggestionsWidget> {
                   stream: widget.placeDataStream,
                   builder:
                       (BuildContext contex, AsyncSnapshot placeDataSnapshot) {
-                    if (placeDataSnapshot.hasData &&
-                        placeDataSnapshot.data != Null) {
-                      print(placeDataSnapshot.data.name);
-                      print(placeDataSnapshot.data.latlng);
-                    }
                     if (placeDataSnapshot.hasData &&
                         placeDataSnapshot.data != Null) {
                       return ListView.builder(
@@ -153,7 +148,6 @@ class _AddrSuggestionsWidgetState extends State<AddrSuggestionsWidget> {
             } else {
               return Container();
             }
-          }
         },
       ),
     );

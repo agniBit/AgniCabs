@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:testing/Screens/loginPage/components/textinputfield.dart';
 import 'package:testing/Screens/map/mapSearchScreen.dart';
 import 'package:testing/const.dart';
-import 'package:testing/serverAPIs/authUser.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);
